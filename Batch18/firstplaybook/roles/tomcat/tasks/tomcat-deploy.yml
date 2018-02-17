@@ -1,0 +1,2 @@
+- name: copy war
+      copy: src=/var/lib/jenkins/workspace/pipeline-fromScript-MVC/target/nvnshoppingcart.war dest=/usr/local/apache-tomcat-8.0.23/webapps/nvnshoppingcart.war owner=tomcat group=tomcat mode=0744

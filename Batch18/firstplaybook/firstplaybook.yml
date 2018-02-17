@@ -1,0 +1,23 @@
+  - name: Manage Tomcat
+    hosts: all
+    become: true
+
+    roles:
+          - { role: tomcat, tags: ['tomcat'] }
+
+    tasks:
+    - name: Ansible copy war
+      copy:
+        src: /var/lib/jenkins/workspace/ansible-project/target/nvnshoppingcart.war
+        dest: /usr/local/apache-tomcat-8.0.23/webapps/
+        owner: root
+        group: root
+        mode: 0755
+  
+    - name: Change ownership of Tomcat installation
+      file: path=/usr/local/apache-tomcat-8.0.23 owner=tomcat group=tomcat state=directory recurse=yes
+
+    - name: Start Tomcat
+      command: nohup /usr/local/apache-tomcat-8.0.23/bin/startup.sh
+      become: true
+      become_user: tomcat
